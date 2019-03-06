@@ -75,7 +75,7 @@ EXPOSE 22 25 80 110 143 465 993 995
 
 # For imapsync
 ADD config.cfg /config.cfg
-ADD config.cfg.defaults /config.cfg/defaults
+ADD config.cfg.defaults /config.cfg.defaults
 ADD config.shlib /config.shlib
 
 CMD ["/init.sh"]
