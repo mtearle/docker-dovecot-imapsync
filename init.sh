@@ -1,5 +1,8 @@
-#!/bin/sh
+#!/usr/bin/env bash
+
 # init-like script for the Geary testbed container
+
+source config.shlib; # load the config library functions
 
 # Run tasks as jobs where possible, so we can wait on them.
 /usr/sbin/rsyslogd -n &
