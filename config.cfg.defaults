@@ -1,2 +1,4 @@
-myvar=Default Value
-othervar=Another Variable
+host2=localhost
+user2=syncuser
+password2=syncpass
+defaultflags="--regextrans2 's/\//_/g'"
