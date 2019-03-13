@@ -65,10 +65,17 @@ ADD dovecot.conf /etc/dovecot/conf.d/99-test.conf
 ADD postfix.cf /postfix.cf.test
 RUN cat /postfix.cf.test >> /etc/postfix/main.cf && rm /postfix.cf.test
 
+RUN echo "root:root" | chpasswd
+
+# user to sync to
 RUN groupadd syncuser
 RUN useradd -g syncuser -m -s /bin/bash syncuser
-RUN echo "root:root" | chpasswd
 RUN echo "syncuser:syncpass" | chpasswd
+
+# user for testing sync locally
+RUN groupadd testuser
+RUN useradd -g testuser -m -s /bin/bash testuser
+RUN echo "testuser:testpass" | chpasswd
 
 ADD init.sh /init.sh
 EXPOSE 22 25 80 110 143 465 993 995
