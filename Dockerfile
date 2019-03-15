@@ -71,6 +71,9 @@ RUN echo "root:root" | chpasswd
 RUN groupadd syncuser
 RUN useradd -g syncuser -m -s /bin/bash -d /syncuser syncuser
 RUN echo "syncuser:syncpass" | chpasswd
+
+# help doco
+ADD help.txt /help.txt
 RUN touch /syncuser/HELP
 RUN chown syncuser.syncuser /syncuser/HELP
 
