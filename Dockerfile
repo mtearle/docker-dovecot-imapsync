@@ -69,12 +69,14 @@ RUN echo "root:root" | chpasswd
 
 # user to sync to
 RUN groupadd syncuser
-RUN useradd -g syncuser -m -s /bin/bash syncuser
+RUN useradd -g syncuser -m -s /bin/bash -d /syncuser syncuser
 RUN echo "syncuser:syncpass" | chpasswd
+RUN touch /syncuser/HELP
+RUN chown syncuser.syncuser /syncuser/HELP
 
 # user for testing sync locally
 RUN groupadd testuser
-RUN useradd -g testuser -m -s /bin/bash testuser
+RUN useradd -g testuser -m -s /bin/bash -d /testuser testuser
 RUN echo "testuser:testpass" | chpasswd
 
 ADD init.sh /init.sh
