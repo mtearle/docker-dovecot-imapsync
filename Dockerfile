@@ -82,6 +82,10 @@ RUN groupadd testuser
 RUN useradd -g testuser -m -s /bin/bash -d /testuser testuser
 RUN echo "testuser:testpass" | chpasswd
 
+# obtain corpus of test emails from https://github.com/tedious/DovecotTesting
+RUN wget -q -O - https://github.com/tedious/DovecotTesting/archive/master.tar.gz  | tar -C /testuser -x -v -z -f - DovecotTesting-master/resources/Maildir --strip-components=2
+RUN chown -R testuser.testuser /testuser/Maildir
+
 ADD init.sh /init.sh
 EXPOSE 22 25 80 110 143 465 993 995
 
