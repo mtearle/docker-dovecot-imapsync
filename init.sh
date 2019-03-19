@@ -12,6 +12,10 @@ source imapsync.shlib; # load imapsync function
 /usr/sbin/postfix start # postfix won't get waited on.
 
 
+# set up mail directory under syncuser
+mkdir -p /syncuser/mail
+touch /syncuser/mail/inbox
+chown -R syncuser.syncuser /syncuser/mail
 
 # check for dir mounted  (look for HELP file to not exist)
 # not mounted, then output help, exit
