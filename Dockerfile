@@ -59,8 +59,12 @@ RUN echo "postfix postfix/main_mailer_type string 'Internet Site'" | debconf-set
 RUN apt-get install -y openssh-server
 RUN apt-get install -y dovecot-imapd
 RUN apt-get install -y postfix
+RUN apt-get install -y rsyslog
 
 RUN mkdir /var/run/sshd
+
+# let dovecot autoconfigure mailbox
+RUN sed -i '/mail_location = mbox:~\/mail:INBOX=\/var\/mail\/%u/d' /etc/dovecot/conf.d/10-mail.conf
 ADD dovecot.conf /etc/dovecot/conf.d/99-test.conf
 ADD postfix.cf /postfix.cf.test
 RUN cat /postfix.cf.test >> /etc/postfix/main.cf && rm /postfix.cf.test
@@ -93,5 +97,6 @@ EXPOSE 22 25 80 110 143 465 993 995
 ADD config.cfg /config.cfg
 ADD config.cfg.defaults /config.cfg.defaults
 ADD config.shlib /config.shlib
+ADD imapsync.shlib /imapsync.shlib
 
 CMD ["/init.sh"]

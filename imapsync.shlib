@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+
+flag_val () {
+	flag=$1
+	val=$2
+	if [ ! -z "$val" ] ; then 
+		echo "--$flag=$val"
+	fi
+}
+
+call_imapsync () {
+	args=$1
+	defaultargs=$2
+	host1=$( flag_val host1 $3 )
+	port1=$( flag_val port1 $4 )
+	user1=$( flag_val user1 $5 )
+	password1=$( flag_val password1 $6 )
+	host2=$( flag_val host2 $7 )
+	port2=$( flag_val port2 $8 )
+	user2=$( flag_val user2 $9 )
+	password2=$( flag_val password2 ${10} )
+
+	command="imapsync $args $defaultargs $host1 $port1 $user1 $password1 $host2 $port2 $user2 $password2"
+	echo $command
+	eval $command
+}
