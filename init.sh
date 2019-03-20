@@ -54,10 +54,27 @@ elif [ -f /syncuser/TEST ]; then
 	fi
 else
 	echo "Good to go!"
+
+	# parameters for test
+	host1="$(config_get host1)";
+	port1="$(config_get port1)";
+	user1="$(config_get user1)";
+	password1="$(config_get password1)";
+	#
+	host2="$(config_get host2)";
+	port2="$(config_get port2)";
+	user2="$(config_get user2)";
+	password2="$(config_get password2)";
+	#
+	flags="$(config_get flags)";
+	defaultflags="$(config_get defaultflags)";
+
+	echo
+	echo "Running with:"
+	echo
+	echo call_imapsync \'$flags\' \'$defaultflags\' $host1 $port1 $user1 $password1 $host2 $port2 $user2 $password2 
+	echo
+	call_imapsync '$flags' '$defaultflags' $host1 $port1 $user1 $password1 $host2 $port2 $user2 $password2 
+
+	echo "imapsync complete"
 fi
-
-
-
-
-read
-

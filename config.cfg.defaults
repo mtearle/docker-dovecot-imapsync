@@ -1,4 +1,5 @@
 host2=localhost
 user2=syncuser
 password2=syncpass
-defaultflags="--regextrans2 's/\//_/g'"
+port2=993
+defaultflags=--regextrans2 's/\//_/g'
