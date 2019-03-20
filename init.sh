@@ -41,6 +41,17 @@ elif [ -f /syncuser/TEST ]; then
 	defaultflags="--regextrans2 's/\//_/g'"
 
 	call_imapsync "$flags" "$defaultflags" $host1 $port1 $user1 $password1 $host2 $port2 $user2 $password2 
+
+	grep -Iirn ^Message-ID /syncuser/mail > /tmp/synced-msgids
+
+	diff /test-msgids /tmp/synced-msgids
+
+	if [ $? -eq 0 ]
+	then
+		echo "Successfully synced TEST messages"
+	else
+		echo "Error syncing messages"
+	fi
 else
 	echo "Good to go!"
 fi
