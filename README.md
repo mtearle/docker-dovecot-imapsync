@@ -1,38 +1,49 @@
-docker-dovecot-postfix
-======================
+docker-dovecot-imapsync
+=======================
 
-This is the source to build a Docker image that will let you run temporary IMAP
-and SMTP servers sandboxed on your local machine, in a way compatible with
-Geary.
+This is the source to build a Docker image that will let you run a temporary IMAP
+server sandboxed on your local machine to enable you to use imapsync to sync
+messages to a local mailbox files.
 
 Build the Docker image:
 
-    sudo docker build -t test .
+    docker build -t docker-dovecot-imapsync .
 
-Run the image:
+Run the image (example usage):
 
-    container=`sudo docker run -d test`
+    docker run -v /path/to/sync/to:/syncuser -v /path/to/config.cfg:/config.cfg -v /path/to/passfile:/passfile -p 5522:22 --rm -it docker-dovecot-imapsync 
+    
+    docker run 
+     -v /path/to/sync/to:/syncuser         # bind mount for direct to contain synced emails
+     -v /path/to/config.cfg:/config.cfg    # bind mount for config file
+     -v /path/to/passfile:/passfile        # bind mount for passfile for imapsync
+     -p 5522:22                            # expose SSH port for debug
+     --rm                                  # remove image after run
+     -it docker-dovecot-imapsync           # image tag
 
-Find the IP address of the running image:
+Example config.cfg:
 
-    sudo docker inspect $container | grep IPAddress | cut -d: -f2- | tr -d ' ",'
+    host1=thatmailhost.example.com
+    flags=--ssl1 --ssl2 --passfile1 /passfile
+    port1=993
+    user1=thatmailuser
+    password1=nopass
+    
 
-The image's root password is root, and there's also a normal user named test,
-password test.  You can ssh in if you need to examine things.
+There are three accounts on the image:
+    root - password root
+    testuser - password testpass
+    syncuser - password syncpass
 
-Now you can configure Geary.  Add a new "Other" account with the email address
-<test@example.com>.  Use the image's IP address as both the IMAP and SMTP
-server.  Use test/test as the user/pass for both.  Set Encryption to None for
-both as well.
-
-The SMTP server will accept mail to <test@example.com>.
-
-When you're done testing, stop the running image:
-
-    sudo docker stop $container
+Tests can be run be creating an empty file called TEST under the path to be synced to
 
 Copyright/License
 -----------------
+
+Copyright 2019 Mark Tearle
+
+Adapted from docker-dovecot-postfix 
+<https://github.com/dcondomitti/docker-dovecot-postfix.git>
 
 Copyright 2014 Yorba Foundation
 

@@ -1,2 +1,16 @@
 Usages instructions for docker-dovecot-imapsync
 ===============================================
+
+Run the image (example usage):
+
+    docker run -v /path/to/sync/to:/syncuser -v /path/to/config.cfg:/config.cfg -v /path/to/passfile:/passfile -p 5522:22 --rm -it docker-dovecot-imapsync 
+    
+    docker run 
+     -v /path/to/sync/to:/syncuser         # bind mount for direct to contain synced emails
+     -v /path/to/config.cfg:/config.cfg    # bind mount for config file
+     -v /path/to/passfile:/passfile        # bind mount for passfile for imapsync
+     -p 5522:22                            # expose SSH port for debug
+     --rm                                  # remove image after run
+     -it docker-dovecot-imapsync           # image tag
+
+See README.md for more information
