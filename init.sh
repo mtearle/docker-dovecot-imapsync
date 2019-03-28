@@ -44,10 +44,7 @@ elif [ -f /syncuser/TEST ]; then
 
 	grep -Iirn ^Message-ID /syncuser/mail > /tmp/synced-msgids
 
-	diff /test-msgids /tmp/synced-msgids
-
-	if [ $? -eq 0 ]
-	then
+	if diff /test-msgids /tmp/synced-msgids; then
 		echo "Successfully synced TEST messages"
 	else
 		echo "Error syncing messages"
