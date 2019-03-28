@@ -40,7 +40,7 @@ elif [ -f /syncuser/TEST ]; then
 	password2=syncpass
 	defaultflags="--regextrans2 's/\//_/g'"
 
-	call_imapsync "$flags" "$defaultflags" $host1 $port1 $user1 $password1 $host2 $port2 $user2 $password2 
+	call_imapsync "$flags" "$defaultflags" "$host1" "$port1" "$user1" "$password1" "$host2" "$port2" "$user2" "$password2"
 
 	grep -Iirn ^Message-ID /syncuser/mail > /tmp/synced-msgids
 
@@ -66,12 +66,14 @@ else
 	flags="$(config_get flags)";
 	defaultflags="$(config_get defaultflags)";
 
+	# TODO: Investigate quoting further
 	echo
 	echo "Running with:"
 	echo
-	echo call_imapsync \'$flags\' \'$defaultflags\' $host1 $port1 $user1 $password1 $host2 $port2 $user2 $password2 
+	echo call_imapsync \'"$flags"\' \'"$defaultflags"\' "$host1" "$port1" "$user1" "$password1" "$host2" "$port2" "$user2" "$password2"
 	echo
-	call_imapsync '$flags' '$defaultflags' $host1 $port1 $user1 $password1 $host2 $port2 $user2 $password2 
+	# shellcheck disable=SC2016
+	call_imapsync '$flags' '$defaultflags' "$host1" "$port1" "$user1" "$password1" "$host2" "$port2" "$user2" "$password2"
 
 	echo "imapsync complete"
 fi
