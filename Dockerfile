@@ -2,7 +2,6 @@
 # Ideas taken from https://github.com/sullof/docker-sshd
 
 FROM ubuntu:cosmic
-MAINTAINER Charles Lindsay <chaz@yorba.org>
 
 RUN apt-get update -y
 RUN apt-get upgrade -y
