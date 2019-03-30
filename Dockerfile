@@ -4,7 +4,6 @@
 FROM ubuntu:cosmic
 
 RUN apt-get update -y
-RUN apt-get upgrade -y
 
 # Add imapsync install code 
 
