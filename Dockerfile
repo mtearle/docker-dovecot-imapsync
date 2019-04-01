@@ -1,15 +1,19 @@
-# Dovecot & Postfix testbed for Geary
+# docker-dovecot-imapsync Dockerfile
+#
 # Ideas taken from https://github.com/sullof/docker-sshd
 
 FROM ubuntu:cosmic
 
+
 # explicitly set pipefail
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
+# hadolint ignore=DL3009
 RUN apt-get update -y
 
 # Add imapsync install code 
 
+# hadolint ignore=DL3008
 RUN apt-get install --no-install-recommends -y libjson-webtoken-perl \
   libauthen-ntlm-perl \
   libcgi-pm-perl \
@@ -55,10 +59,21 @@ RUN ln -sf /bin/true /sbin/initctl
 RUN echo "postfix postfix/mailname string example.com" | debconf-set-selections
 RUN echo "postfix postfix/main_mailer_type string 'Internet Site'" | debconf-set-selections
 
+# hadolint ignore=DL3008
 RUN apt-get install --no-install-recommends -y openssh-server
+
+# hadolint ignore=DL3008
 RUN apt-get install --no-install-recommends -y dovecot-imapd
+
+# hadolint ignore=DL3008
 RUN apt-get install --no-install-recommends -y postfix
+
+# hadolint ignore=DL3008
 RUN apt-get install --no-install-recommends -y rsyslog
+
+# clean up apt-caches
+RUN apt-get clean \
+ && rm -rf /var/lib/apt/lists/*
 
 RUN mkdir /var/run/sshd
 
