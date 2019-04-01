@@ -3,6 +3,9 @@
 
 FROM ubuntu:cosmic
 
+# explicitly set pipefail
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+
 RUN apt-get update -y
 
 # Add imapsync install code 
