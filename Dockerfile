@@ -63,8 +63,8 @@ RUN mkdir /var/run/sshd
 
 # let dovecot autoconfigure mailbox
 RUN sed -i '/mail_location = mbox:~\/mail:INBOX=\/var\/mail\/%u/d' /etc/dovecot/conf.d/10-mail.conf
-ADD dovecot.conf /etc/dovecot/conf.d/99-test.conf
-ADD postfix.cf /postfix.cf.test
+COPY dovecot.conf /etc/dovecot/conf.d/99-test.conf
+COPY postfix.cf /postfix.cf.test
 RUN cat /postfix.cf.test >> /etc/postfix/main.cf && rm /postfix.cf.test
 
 RUN echo "root:root" | chpasswd
@@ -75,7 +75,7 @@ RUN useradd -g syncuser -m -s /bin/bash -d /syncuser syncuser
 RUN echo "syncuser:syncpass" | chpasswd
 
 # help doco
-ADD help.txt /help.txt
+COPY help.txt /help.txt
 RUN touch /syncuser/HELP
 RUN chown syncuser.syncuser /syncuser/HELP
 
@@ -87,15 +87,15 @@ RUN echo "testuser:testpass" | chpasswd
 # obtain corpus of test emails from https://github.com/tedious/DovecotTesting
 RUN wget -q -O - https://github.com/tedious/DovecotTesting/archive/master.tar.gz  | tar -C /testuser -x -v -z -f - DovecotTesting-master/resources/Maildir --strip-components=2
 RUN chown -R testuser.testuser /testuser/Maildir
-ADD test-msgids /test-msgids
+COPY test-msgids /test-msgids
 
-ADD init.sh /init.sh
+COPY init.sh /init.sh
 EXPOSE 22 25 80 110 143 465 993 995
 
 # For imapsync
-ADD config.cfg /config.cfg
-ADD config.cfg.defaults /config.cfg.defaults
-ADD config.shlib /config.shlib
-ADD imapsync.shlib /imapsync.shlib
+COPY config.cfg /config.cfg
+COPY config.cfg.defaults /config.cfg.defaults
+COPY config.shlib /config.shlib
+COPY imapsync.shlib /imapsync.shlib
 
 CMD ["/init.sh"]
