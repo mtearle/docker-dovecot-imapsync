@@ -7,9 +7,7 @@ RUN apt-get update -y
 
 # Add imapsync install code 
 
-RUN apt-get install -y libjson-webtoken-perl 
-
-RUN apt-get install -y libjson-webtoken-perl \
+RUN apt-get install --no-install-recommends -y libjson-webtoken-perl \
   libauthen-ntlm-perl \
   libcgi-pm-perl \
   libcrypt-openssl-rsa-perl \
@@ -54,10 +52,10 @@ RUN ln -sf /bin/true /sbin/initctl
 RUN echo "postfix postfix/mailname string example.com" | debconf-set-selections
 RUN echo "postfix postfix/main_mailer_type string 'Internet Site'" | debconf-set-selections
 
-RUN apt-get install -y openssh-server
-RUN apt-get install -y dovecot-imapd
-RUN apt-get install -y postfix
-RUN apt-get install -y rsyslog
+RUN apt-get install --no-install-recommends -y openssh-server
+RUN apt-get install --no-install-recommends -y dovecot-imapd
+RUN apt-get install --no-install-recommends -y postfix
+RUN apt-get install --no-install-recommends -y rsyslog
 
 RUN mkdir /var/run/sshd
 
